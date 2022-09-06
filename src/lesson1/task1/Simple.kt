@@ -65,7 +65,7 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
+fun seconds(hours: Int, minutes: Int, seconds: Int): Int = (hours * 60 * 60 + minutes * 60 + seconds)
 
 /**
  * Тривиальная (1 балл)
@@ -74,7 +74,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
  * Определить длину того же отрезка в метрах (в данном случае 18.98).
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = TODO()
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = (sagenes * 48 + 16 * arshins + vershoks)*4.445/100
 
 /**
  * Тривиальная (1 балл)
@@ -82,7 +82,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = TODO()
  * Пользователь задает угол в градусах, минутах и секундах (например, 36 градусов 14 минут 35 секунд).
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
-fun angleInRadian(deg: Int, min: Int, sec: Int): Double = TODO()
+fun angleInRadian(deg: Int, min: Int, sec: Int): Double = (deg.toDouble() + (min.toDouble() + (sec.toDouble()/60))/60)*(kotlin.math.PI/180)
 
 /**
  * Тривиальная (1 балл)
