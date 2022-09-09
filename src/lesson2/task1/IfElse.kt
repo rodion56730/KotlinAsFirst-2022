@@ -68,7 +68,15 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String = when (age % 100) {
+    in 11..14 -> "$age лет"
+    else -> when (age % 10) {
+        0 -> "$age лет"
+        1 -> "$age год"
+        in 2..4 -> "$age года"
+        else -> "$age лет"
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -81,7 +89,17 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    var S: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    if (S <= t1 * v1)
+        return S / v1
+    S -= t1 * v1
+    if (S <= t2 * v2)
+        return S / v2 + t1
+    S -= t2 * v2
+    return S / v3 + t1 + t2
+}
+
 
 /**
  * Простая (2 балла)
@@ -96,7 +114,14 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int = when {
+    (kingX == rookX2 && kingX == rookX1) || (kingY == rookY2 && kingY == rookY1) || (kingX == rookX2 && kingY == rookY1)
+            || (kingY == rookY2 && kingX == rookX1) -> 3
+
+    (kingX == rookX2 || kingY == rookY2) -> 2
+    (kingX == rookX1 || kingY == rookY1) -> 1
+    else -> 0
+}
 
 /**
  * Простая (2 балла)
@@ -113,6 +138,7 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int = TODO()
+
 
 /**
  * Простая (2 балла)
@@ -132,4 +158,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if (a >= c && d >= b && b >= c) return b-a
+    if (a <= c && d >= a && b >= d) return d-c
+    if (b in c..d) return b - c
+    if (a in c..d) return d - a
+    return -1
+}
