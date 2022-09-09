@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import kotlin.math.max
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -149,7 +150,31 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    var max = 0.0
+    var s = 0.0
+    var s2 = 0.0
+    if (a >= b && a >= c) {
+        max = a
+        s = b
+        s2 = c
+    }
+    if (b >= a && b >= c) {
+        max = b
+        s = a
+        s2 = c
+    }
+    if (c >= a && c >= b) {
+        max = c
+        s = b
+        s2 = a
+    }
+    if (a+b<=c || b+c<=a || c+a<=b) return -1
+    if (max.pow(2) < s.pow(2) + s2.pow(2)) return 0
+    if (max.pow(2) == s.pow(2) + s2.pow(2)) return 1
+
+    return 2
+}
 
 /**
  * Средняя (3 балла)
@@ -160,8 +185,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (a >= c && d >= b && b >= c) return b-a
-    if (a <= c && d >= a && b >= d) return d-c
+    if (a >= c && d >= b && b >= c) return b - a
+    if (a <= c && d >= a && b >= d) return d - c
     if (b in c..d) return b - c
     if (a in c..d) return d - a
     return -1
