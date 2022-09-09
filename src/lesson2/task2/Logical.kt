@@ -3,6 +3,8 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Пример
@@ -47,8 +49,8 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    var vis = year % 100 ==0 && year % 400 ==0
-    if (year % 4 == 0 && year % 100 !=0) vis = true
+    var vis = year % 100 == 0 && year % 400 == 0
+    if (year % 4 == 0 && year % 100 != 0) vis = true
 
     when (month) {
         1 -> return 31
@@ -93,4 +95,33 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    var min1 = 0
+    var min2 = 0
+    if (a <= b && a <= c) {
+        min1 = a
+        if (b <= c) {
+            min2 = b
+        } else {
+            min2 = c
+        }
+    }
+    if (b <= a && b <= c) {
+        min1 = b
+        if (a <= c) {
+            min2 = a
+        } else {
+            min2 = c
+        }
+    }
+    if (c <= a && c <= b) {
+        min1 = c
+        if (a <= b) {
+            min2 = a
+        } else {
+            min2 = b
+        }
+    }
+    if (min(r, s) >= min1 && max(r, s) >= min2) return true
+    return false
+}
