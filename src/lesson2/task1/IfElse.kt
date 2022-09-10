@@ -91,14 +91,14 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    var S: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-    if (S <= t1 * v1)
-        return S / v1
-    S -= t1 * v1
-    if (S <= t2 * v2)
-        return S / v2 + t1
-    S -= t2 * v2
-    return S / v3 + t1 + t2
+    var s: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    if (s <= t1 * v1)
+        return s / v1
+    s -= t1 * v1
+    if (s <= t2 * v2)
+        return s / v2 + t1
+    s -= t2 * v2
+    return s / v3 + t1 + t2
 }
 
 
@@ -185,9 +185,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (a >= c && d >= b && b >= c) return b - a
-    if (a <= c && d >= a && b >= d) return d - c
-    if (b in c..d) return b - c
-    if (a in c..d) return d - a
+    when {
+        a >= c && d >= b && b >= c -> return b - a
+        a <= c && d >= a && b >= d -> return d - c
+        b in c..d -> return b - c
+        a in c..d -> return d - a
+    }
     return -1
 }
