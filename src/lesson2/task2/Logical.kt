@@ -28,8 +28,7 @@ fun isNumberHappy(number: Int): Boolean {
     n /= 10
     val c = n % 10
     n /= 10
-    if (a + b == c + n) return true
-    return false
+    return a + b == c + n
 }
 
 /**
@@ -52,26 +51,26 @@ fun daysInMonth(month: Int, year: Int): Int {
     var vis = year % 100 == 0 && year % 400 == 0
     if (year % 4 == 0 && year % 100 != 0) vis = true
 
-    when (month) {
-        1 -> return 31
-        2 -> if (vis == true) {
-            return 29
+    return when (month) {
+        1 -> 31
+        2 -> if (vis) {
+            29
         } else {
-            return 28
+            28
         }
 
-        3 -> return 31
-        4 -> return 30
-        5 -> return 31
-        6 -> return 30
-        7 -> return 31
-        8 -> return 31
-        9 -> return 30
-        10 -> return 31
-        11 -> return 30
-        12 -> return 31
+        3 -> 31
+        4 -> 30
+        5 -> 31
+        6 -> 30
+        7 -> 31
+        8 -> 31
+        9 -> 30
+        10 -> 31
+        11 -> 30
+        12 -> 31
+        else -> -1
     }
-    return -1
 }
 
 /**
@@ -122,6 +121,5 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
             min2 = b
         }
     }
-    if (min(r, s) >= min1 && max(r, s) >= min2) return true
-    return false
+    return min(r, s) >= min1 && max(r, s) >= min2
 }

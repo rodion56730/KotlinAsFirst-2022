@@ -91,7 +91,7 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    var s: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    var s = (t1 * v1 + t2 * v2 + t3 * v3) / 2
     if (s <= t1 * v1)
         return s / v1
     s -= t1 * v1
@@ -120,8 +120,8 @@ fun whichRookThreatens(
             || (kingX == rookX2 && kingY == rookY1)
             || (kingY == rookY2 && kingX == rookX1) -> 3
 
-    (kingX == rookX2 || kingY == rookY2) -> 2
-    (kingX == rookX1 || kingY == rookY1) -> 1
+    kingX == rookX2 || kingY == rookY2 -> 2
+    kingX == rookX1 || kingY == rookY1 -> 1
     else -> 0
 }
 
@@ -169,7 +169,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         s = b
         s2 = a
     }
-    if (a+b<=c || b+c<=a || c+a<=b) return -1
+    if (a + b <= c || b + c <= a || c + a <= b) return -1
     if (max.pow(2) < s.pow(2) + s2.pow(2)) return 0
     if (max.pow(2) == s.pow(2) + s2.pow(2)) return 1
 
@@ -185,11 +185,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    when {
-        a >= c && d >= b && b >= c -> return b - a
-        a <= c && d >= a && b >= d -> return d - c
-        b in c..d -> return b - c
-        a in c..d -> return d - a
+    return when {
+        a >= c && d >= b && b >= c -> b - a
+        a <= c && d >= a && b >= d -> d - c
+        b in c..d -> b - c
+        a in c..d -> d - a
+        else -> -1
     }
-    return -1
 }
