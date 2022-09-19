@@ -169,11 +169,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         s = b
         s2 = a
     }
-    if (a + b <= c || b + c <= a || c + a <= b) return -1
-    if (max.pow(2) < s.pow(2) + s2.pow(2)) return 0
-    if (max.pow(2) == s.pow(2) + s2.pow(2)) return 1
-
-    return 2
+    return when {
+        a + b <= c || b + c <= a || c + a <= b -> -1
+        max.pow(2) < s.pow(2) + s2.pow(2) -> 0
+        max.pow(2) == s.pow(2) + s2.pow(2) -> 1
+        else -> 2
+    }
 }
 
 /**
