@@ -123,8 +123,8 @@ fun whichRookThreatens(
 
     return when {
         (s && t) || (h && j) || (s && j) || (h && t) -> 3
-        kingX == rookX2 || kingY == rookY2 -> 2
-        kingX == rookX1 || kingY == rookY1 -> 1
+        s || h -> 2
+        t || j -> 1
         else -> 0
     }
 }
