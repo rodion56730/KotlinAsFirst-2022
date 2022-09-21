@@ -93,11 +93,9 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    fun fibonachi(n: Int): Int {
-        if (n == 1 || n == 2) return 1
-        else return fibonachi(n - 1) + fibonachi(n - 2)
-    }
-    return fibonachi(n)
+    return if (n == 1 || n == 2) {
+        1
+    } else fib(n - 1) + fib(n - 2)
 }
 
 /**
@@ -172,12 +170,13 @@ fun collatzSteps(x: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var s = 0
-    for (i in max(n, m)..m * n) {
+    for (i in max(n, m)..m * n / 2) {
         if (i % m == 0 && i % n == 0) {
             s = i
             break
         }
     }
+    if (s == 0) return n * m
     return s
 }
 
