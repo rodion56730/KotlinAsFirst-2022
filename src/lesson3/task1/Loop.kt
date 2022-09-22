@@ -92,11 +92,8 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int {
-    return if (n == 1 || n == 2) {
-        1
-    } else fib(n - 1) + fib(n - 2)
-}
+fun fib(n: Int): Int = (((sqrt(5.0) + 1) / 2).pow(n) / sqrt(5.0) + 0.5).toInt()
+
 
 /**
  * Простая (2 балла)
@@ -170,8 +167,8 @@ fun collatzSteps(x: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var s = 0
-    for (i in max(n, m)..m * n / 2) {
-        if (i % m == 0 && i % n == 0) {
+    for (i in max(n, m)..(sqrt(m * n.toDouble())).toInt() + 1) {
+        if (i * i % m == 0 && i * i % n == 0) {
             s = i
             break
         }
