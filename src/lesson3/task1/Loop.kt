@@ -21,7 +21,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -199,7 +199,16 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var num1 = n
+    var num2 = 0
+    while (num1 > 0) {
+        num2 *= 10
+        num2 += num1 % 10
+        num1 /= 10
+    }
+    return num2
+}
 
 /**
  * Средняя (3 балла)
@@ -210,7 +219,10 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    if (n == revert(n)) return true
+    return false
+}
 
 /**
  * Средняя (3 балла)
@@ -220,7 +232,18 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var num1 = n
+    var num2 = 0
+    val s = n % 10
+    var sum = 0
+    while (num1 > 0) {
+        sum += s
+        num2 += num1 % 10
+        num1 /= 10
+    }
+    return (num2 != sum)
+}
 
 /**
  * Средняя (4 балла)
@@ -231,7 +254,7 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double = kotlin.math.sin(x)
 
 /**
  * Средняя (4 балла)
