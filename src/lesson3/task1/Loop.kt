@@ -222,15 +222,19 @@ fun isPalindrome(n: Int): Boolean = n == revert(n)
  */
 fun hasDifferentDigits(n: Int): Boolean {
     var num1 = n
-    var num2 = 1
+    var num2 = 0
     val s = n % 10
-    var sum = 1
+    var sum = 0
+    var sum2 = 1
+    var sum3 = 1
     while (num1 > 0) {
-        sum *= s
-        num2 *= num1 % 10
+        sum += s
+        sum3 *= s
+        num2 += num1 % 10
+        sum2 *= num1 % 10
         num1 /= 10
     }
-    return num2 != sum
+    return (num2 != sum) && (sum2 != sum3)
 }
 
 /**
