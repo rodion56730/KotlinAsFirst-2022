@@ -3,10 +3,7 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -101,15 +98,12 @@ fun fib(n: Int): Int = (((sqrt(5.0) + 1) / 2).pow(n) / sqrt(5.0) + 0.5).toInt()
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var buf = -1
-    for (i in 2..n / 2) {
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
         if (n % i == 0) {
-            buf = i
-            break
+            return i
         }
     }
-    if (buf == -1) return n
-    return buf
+    return n
 }
 
 /**
@@ -118,15 +112,12 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var buf = -1
-    for (i in n / 2 downTo 1) {
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
         if (n % i == 0) {
-            buf = i
-            break
+            return n / i
         }
     }
-    if (buf == -1) return n
-    return buf
+    return 1
 }
 
 /**
@@ -219,10 +210,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    if (n == revert(n)) return true
-    return false
-}
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
@@ -242,7 +230,7 @@ fun hasDifferentDigits(n: Int): Boolean {
         num2 += num1 % 10
         num1 /= 10
     }
-    return (num2 != sum)
+    return num2 != sum
 }
 
 /**
@@ -254,7 +242,20 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = kotlin.math.sin(x)
+fun sin(x: Double, eps: Double): Double {
+    var x1 = x
+    var stepen = 3
+    var fact = 1
+    while (abs(x.pow(stepen) / fact) >= (eps)) {
+        for (i in 1..stepen) {
+            fact = i * fact
+        }
+        x1 -= x.pow(stepen) / fact
+        fact = 1
+        stepen += 1
+    }
+    return x1
+}
 
 /**
  * Средняя (4 балла)
