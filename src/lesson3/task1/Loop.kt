@@ -234,7 +234,7 @@ fun hasDifferentDigits(n: Int): Boolean {
         sum2 *= num1 % 10
         num1 /= 10
     }
-    return (num2 != sum) && (sum2 != sum3)
+    return (num2 != sum) || (sum2 != sum3)
 }
 
 /**
