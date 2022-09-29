@@ -168,12 +168,13 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    val min1 = minOf(n, m)
-    for (i in sqrt(min1.toDouble()).toInt()..min1) {
-        if (n % i == 0 && m % i == 0 && i != 1) {
+    val min1 = maxOf(n, m)
+    for (i in 2..sqrt(min1.toDouble()).toInt()) {
+        if (n % i == 0 && m % i == 0) {
             return false
         }
     }
+    if (n % m == 0 || m % n == 0) return false
     return true
 }
 
