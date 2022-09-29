@@ -174,7 +174,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
             return false
         }
     }
-    if (n % m == 0 || m % n == 0) return false
+    if (n % m == 0 || m % n == 0 && m != 1 && n != 1) return false
     return true
 }
 
