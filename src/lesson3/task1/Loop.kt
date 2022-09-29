@@ -111,14 +111,13 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    for (i in 2..sqrt(n.toDouble()).toInt()) {
+fun maxDivisor(n: Int): Int = n/minDivisor(n)
+    /*for (i in 2..sqrt(n.toDouble()).toInt()) {
         if (n % i == 0) {
             return n / i
         }
-    }
-    return 1
-}
+    }*/
+
 
 /**
  * Простая (2 балла)
@@ -175,7 +174,7 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
     val min1 = minOf(n, m)
-    for (i in 2..min1) {
+    for (i in sqrt(min1.toDouble()).toInt() .. min1) {
         if (n % i == 0 && m % i == 0) {
             return false
         }
@@ -246,20 +245,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double {
-    var x1 = x
-    var stepen = 3
-    var fact = 1
-    while (abs(x.pow(stepen) / fact) >= (eps)) {
-        for (i in 1..stepen) {
-            fact = i * fact
-        }
-        x1 -= x.pow(stepen) / fact
-        fact = 1
-        stepen += 1
-    }
-    return x1
-}
+fun sin(x: Double, eps: Double): Double = TODO()
 
 /**
  * Средняя (4 балла)
