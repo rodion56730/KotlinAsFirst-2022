@@ -170,7 +170,7 @@ fun lcm(m: Int, n: Int): Int {
 fun isCoPrime(m: Int, n: Int): Boolean {
     val min1 = minOf(n, m)
     for (i in sqrt(min1.toDouble()).toInt()..min1) {
-        if (n % i == 0 && m % i == 0) {
+        if (n % i == 0 && m % i == 0 && i != 1) {
             return false
         }
     }
