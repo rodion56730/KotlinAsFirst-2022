@@ -111,12 +111,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = n/minDivisor(n)
-    /*for (i in 2..sqrt(n.toDouble()).toInt()) {
-        if (n % i == 0) {
-            return n / i
-        }
-    }*/
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 
 /**
@@ -174,7 +169,7 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
     val min1 = minOf(n, m)
-    for (i in sqrt(min1.toDouble()).toInt() .. min1) {
+    for (i in sqrt(min1.toDouble()).toInt()..min1) {
         if (n % i == 0 && m % i == 0) {
             return false
         }
