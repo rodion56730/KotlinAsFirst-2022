@@ -237,7 +237,17 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    var s = ""
+    val list = factorize(n)
+    for (i in list.indices) {
+        s += list[i].toString()
+        if (i < list.size - 1) {
+            s += "*"
+        }
+    }
+    return s
+}
 
 /**
  * Средняя (3 балла)
@@ -292,7 +302,21 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val rimList = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val simList = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    var num = n
+    var result = ""
+    var i = simList.size - 1
+    while (num > 0) {
+        while (num - simList[i] >= 0) {
+            num -= simList[i]
+            result += rimList[i]
+        }
+        i--
+    }
+    return result
+}
 
 /**
  * Очень сложная (7 баллов)
@@ -302,3 +326,40 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String = TODO()
+   /*{ val a = listOf("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val b = listOf("одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val c = listOf(
+        "десять",
+        "одиннадцать",
+        "двенадцать",
+        "тринадцать",
+        "четырнадцать",
+        "пятнадцать",
+        "шестнадцать",
+        "семнадцать",
+        "восемнадцать",
+        "девятнадцать"
+    )
+    val d = listOf("двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+    val e = listOf("сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    var result = ""
+    var num1 = n
+    var i = 0
+    while (num1 > 0) {
+        if (num1 % 10 == 0) {
+            num1 /= 10
+            i++
+            continue
+        }
+        when (i) {
+            0 -> result += a[num1 % 10 - 1]
+            1 -> result += a[num1 % 10 - 1]
+            2 -> result += a[num1 % 10 - 1]
+            3 -> result += a[num1 % 10 - 1]
+            4 -> result += a[num1 % 10 - 1]
+        }
+        i++
+        num1 /= 10
+    }
+    return result
+}*/
