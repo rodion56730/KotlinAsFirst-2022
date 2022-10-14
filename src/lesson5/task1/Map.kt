@@ -98,36 +98,17 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val numbersMap = mutableMapOf<Int, List<String>>()
-    val list2 = mutableListOf<String>()
-    val list3 = mutableListOf<String>()
-    val list4 = mutableListOf<String>()
-    val list5 = mutableListOf<String>()
 
-    for ((key, value) in grades) {
-        if (value == 2) {
-            list2.plus(key)
+    for (i in 5 downTo 1) {
+        val names = mutableListOf<String>()
+        for ((key, value) in grades) {
+            if (value == i) {
+                names.add(key)
+            }
+            if (names.isNotEmpty()) {
+                numbersMap += Pair(i, names)
+            }
         }
-        if (value == 3) {
-            list3.plus(key)
-        }
-        if (value == 4) {
-            list4.plus(key)
-        }
-        if (value == 5) {
-            list5.plus(key)
-        }
-    }
-    if (list2.isNotEmpty()) {
-        numbersMap += Pair(2, list2)
-    }
-    if (list3.isNotEmpty()) {
-        numbersMap += Pair(3, list3)
-    }
-    if (list4.isNotEmpty()) {
-        numbersMap += Pair(4, list4)
-    }
-    if (list5.isNotEmpty()) {
-        numbersMap += Pair(5, list5)
     }
     return numbersMap
 }
