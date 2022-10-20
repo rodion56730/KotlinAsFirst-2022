@@ -339,7 +339,13 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     var ost = capacity
     var sum = 0
     val list = mutableSetOf<String>()
+    var bufkey = ""
+    var buf = Pair(0, 0)
     for ((key, value) in treasures) {
+        if (buf.first == value.first) {
+            list.remove(bufkey)
+            list.add(key)
+        }
         ost -= value.first
         if (ost < 0) {
             ost += value.first
@@ -347,6 +353,8 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         }
         list.add(key)
         sum += value.second
+        buf = value
+        bufkey = key
     }
     return list
 }
