@@ -342,13 +342,13 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     var bufkey = ""
     var buf = Pair(0, 0)
     for ((key, value) in treasures) {
-        if (buf.first == value.first) {
-            list.remove(bufkey)
-            list.add(key)
-        }
         ost -= value.first
         if (ost < 0) {
             ost += value.first
+            if (buf.first == value.first) {
+                list.remove(bufkey)
+                list.add(key)
+            }
             continue
         }
         list.add(key)
