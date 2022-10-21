@@ -207,7 +207,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 
 /**
  * Средняя (3 балла)
@@ -336,25 +336,36 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    var ost = capacity
-    var sum = 0
-    val list = mutableSetOf<String>()
-    var bufkey = ""
-    var buf = Pair(0, 0)
+    val list = mutableMapOf<Int, Pair<Int, Int>>()
+    val names = mutableMapOf<Int, String>()
+    var i = 0
     for ((key, value) in treasures) {
-        ost -= value.first
-        if (ost < 0) {
-            ost += value.first
-            if (buf.first == value.first) {
-                list.remove(bufkey)
-                list.add(key)
-            }
-            continue
-        }
-        list.add(key)
-        sum += value.second
-        buf = value
-        bufkey = key
+        list[i] = value
+        names[i] = key
+        i++
     }
-    return list
+    var maxsum = 0
+    var maxbuf = mutableSetOf<Int>()
+    for (j in 0..list.size) {
+        var sum = 0
+        var n = capacity
+        val buf = mutableSetOf<Int>()
+        for (z in j..list.size) {
+            if (n - (list[z]?.first ?: 0) >= 0) {
+                n -= list[z]?.first ?: 0
+                sum += list[z]?.second ?: 0
+                buf.add(z)
+            }
+        }
+        if (maxsum < sum) {
+            maxsum = sum
+            maxbuf = buf
+        }
+    }
+    val ans = mutableSetOf<String>()
+    for (l in maxbuf) {
+        names[l]?.let { ans.add(it) }
+    }
+    return ans
 }
+
