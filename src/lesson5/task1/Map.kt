@@ -362,13 +362,10 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                 if (weights[i - 1] > j) {
                     t[i][j] = t[i - 1][j];
                 } else {
-                    //здесь по формуле. Значение над текущей ячейкой
                     var prev = 0
                     for (z in t[i - 1][j]) {
                         prev += treasures[z]?.second ?: 0
                     }
-                    //Значение по вертикали: ряд вверх
-                    //и по горизонтали: вес рюкзака - вес текущей вещи
                     var sum = 0
                     for (h in t[i - 1][j - weights[i - 1]]) {
                         sum += treasures[h]?.second ?: 0
