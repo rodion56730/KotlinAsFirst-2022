@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import kotlin.math.max
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -106,7 +108,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
                 names.add(key)
             }
             if (names.isNotEmpty()) {
-                numbersMap += Pair(i, names)
+                numbersMap[i] = names
             }
         }
     }
@@ -336,36 +338,52 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val list = mutableMapOf<Int, Pair<Int, Int>>()
-    val names = mutableMapOf<Int, String>()
-    var i = 0
+    var t = arrayOf<Array<Set<String>>>()
+    val names = mutableListOf<String>()
+    val weights = mutableListOf<Int>()
+    val values = mutableListOf<Int>()
     for ((key, value) in treasures) {
-        list[i] = value
-        names[i] = key
-        i++
+        names += key
+        weights += value.first
+        values += value.second
     }
-    var maxsum = 0
-    var maxbuf = mutableSetOf<Int>()
-    for (j in 0..list.size) {
-        var sum = 0
-        var n = capacity
-        val buf = mutableSetOf<Int>()
-        for (z in j..list.size) {
-            if (n - (list[z]?.first ?: 0) >= 0) {
-                n -= list[z]?.first ?: 0
-                sum += list[z]?.second ?: 0
-                buf.add(z)
+    for (i in 0..treasures.size) {
+        var array = arrayOf<Set<String>>()
+        for (j in 0..capacity) {
+            array += setOf("")
+        }
+        t += array
+    }
+    for (i in 0..treasures.size) {
+        for (j in 0..capacity) {
+            if (i == 0 || j == 0) {
+                t[i][j] = setOf()
+            } else {
+                if (weights[i - 1] > j) {
+                    t[i][j] = t[i - 1][j];
+                } else {
+                    //здесь по формуле. Значение над текущей ячейкой
+                    var prev = 0
+                    for (z in t[i - 1][j]) {
+                        prev += treasures[z]?.second ?: 0
+                    }
+                    //Значение по вертикали: ряд вверх
+                    //и по горизонтали: вес рюкзака - вес текущей вещи
+                    var sum = 0
+                    for (h in t[i - 1][j - weights[i - 1]]) {
+                        sum += treasures[h]?.second ?: 0
+                    }
+                    val byFormula = values[i - 1] + sum
+                    if (prev > byFormula) {
+                        t[i][j] = t[i - 1][j]
+                    } else {
+                        t[i][j] = t[i - 1][j - weights[i - 1]] + names[i - 1]
+                    }
+                }
             }
         }
-        if (maxsum < sum) {
-            maxsum = sum
-            maxbuf = buf
-        }
     }
-    val ans = mutableSetOf<String>()
-    for (l in maxbuf) {
-        names[l]?.let { ans.add(it) }
-    }
-    return ans
+    return t[weights.size][capacity]
 }
+
 
