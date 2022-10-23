@@ -108,9 +108,9 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
                 if (value == i) {
                     names.add(key)
                 }
-                if (names.isNotEmpty()) {
-                    numbersMap[i] = names
-                }
+            }
+            if (names.isNotEmpty()) {
+                numbersMap[i] = names
             }
         }
     }
