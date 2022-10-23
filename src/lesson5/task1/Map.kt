@@ -102,7 +102,8 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val numbersMap = mutableMapOf<Int, List<String>>()
     if(grades.isNotEmpty()) {
         val max = (grades.maxBy { it.value }).value
-        for (i in max downTo 0) {
+        val min = (grades.minBy { it.value }).value
+        for (i in max downTo min) {
             val names = mutableListOf<String>()
             for ((key, value) in grades) {
                 if (value == i) {
