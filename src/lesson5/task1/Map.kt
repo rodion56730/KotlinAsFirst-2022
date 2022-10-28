@@ -100,7 +100,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val numbersMap = mutableMapOf<Int, List<String>>()
-    if(grades.isNotEmpty()) {
+    if (grades.isNotEmpty()) {
         val max = (grades.maxBy { it.value }).value
         val min = (grades.minBy { it.value }).value
         for (i in max downTo min) {

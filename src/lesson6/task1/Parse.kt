@@ -74,7 +74,95 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val n = str.split(" ")
+    val data = mutableListOf<String>()
+    for (part in n) {
+        data.add(part)
+    }
+    if (data.size != 3) {
+        return ""
+    }
+    when (data[1]) {
+        "января" -> {
+            if (data[0].toInt() in 1..31) {
+                data[1] = "01"
+            } else return ""
+        }
+
+        "февраля" -> {
+            if (data[0].toInt() in 1..28) {
+                data[1] = "02"
+            } else return ""
+        }
+
+        "марта" -> {
+            if (data[0].toInt() in 1..31) {
+                data[1] = "03"
+            } else return ""
+        }
+
+        "апреля" -> {
+            if (data[0].toInt() in 1..30) {
+                data[1] = "04"
+            } else return ""
+        }
+
+        "мая" -> {
+            if (data[0].toInt() in 1..31) {
+                data[1] = "05"
+            } else return ""
+        }
+
+        "июня" -> {
+            if (data[0].toInt() in 1..30) {
+                data[1] = "06"
+            } else return ""
+        }
+
+        "июля" -> {
+            if (data[0].toInt() in 1..31) {
+                data[1] = "07"
+            } else return ""
+        }
+
+        "августа" -> {
+            if (data[0].toInt() in 1..31) {
+                data[1] = "08"
+            } else return ""
+        }
+
+        "сентября" -> {
+            if (data[0].toInt() in 1..30) {
+                data[1] = "09"
+            } else return ""
+        }
+
+        "октября" -> {
+            if (data[0].toInt() in 1..31) {
+                data[1] = "10"
+            } else return ""
+        }
+
+        "ноября" -> {
+            if (data[0].toInt() in 1..30) {
+                data[1] = "11"
+            } else return ""
+        }
+
+        "декабря" -> {
+            if (data[0].toInt() in 1..31) {
+                data[1] = "12"
+            } else return ""
+        }
+
+        else -> return ""
+    }
+    if (data[0].length != 2) {
+        data[0] = "0" + data[0]
+    }
+    return data[0] + "." + data[1] + "." + data[2]
+}
 
 /**
  * Средняя (4 балла)
