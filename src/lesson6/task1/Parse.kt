@@ -161,7 +161,10 @@ fun dateStrToDigit(str: String): String {
     if (data[0].length != 2) {
         data[0] = "0" + data[0]
     }
-    return data[0] + "." + data[1] + "." + data[2]
+    if (data[2].toInt() in 1000..3000){
+        return data[0] + "." + data[1] + "." + data[2]
+    }
+    return ""
 }
 
 /**
