@@ -83,6 +83,8 @@ fun dateStrToDigit(str: String): String {
     if (data.size != 3) {
         return ""
     }
+    val vis =
+        data[2].toInt() % 100 == 0 && data[2].toInt() % 400 == 0 || data[2].toInt() % 4 == 0 && data[2].toInt() % 100 != 0
     when (data[1]) {
         "января" -> {
             if (data[0].toInt() in 1..31) {
@@ -91,9 +93,15 @@ fun dateStrToDigit(str: String): String {
         }
 
         "февраля" -> {
-            if (data[0].toInt() in 1..28) {
-                data[1] = "02"
-            } else return ""
+            if (vis) {
+                if (data[0].toInt() in 1..29) {
+                    data[1] = "02"
+                } else return ""
+            } else {
+                if (data[0].toInt() in 1..28) {
+                    data[1] = "02"
+                } else return ""
+            }
         }
 
         "марта" -> {
