@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import java.lang.NumberFormatException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -83,93 +85,97 @@ fun dateStrToDigit(str: String): String {
     if (data.size != 3) {
         return ""
     }
-    val vis =
-        data[2].toInt() % 100 == 0 && data[2].toInt() % 400 == 0 || data[2].toInt() % 4 == 0 && data[2].toInt() % 100 != 0
-    when (data[1]) {
-        "января" -> {
-            if (data[0].toInt() in 1..31) {
-                data[1] = "01"
-            } else return ""
-        }
-
-        "февраля" -> {
-            if (vis) {
-                if (data[0].toInt() in 1..29) {
-                    data[1] = "02"
-                } else return ""
-            } else {
-                if (data[0].toInt() in 1..28) {
-                    data[1] = "02"
+    try {
+        val vis =
+            data[2].toInt() % 100 == 0 && data[2].toInt() % 400 == 0 || data[2].toInt() % 4 == 0 && data[2].toInt() % 100 != 0
+        when (data[1]) {
+            "января" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "01"
                 } else return ""
             }
-        }
 
-        "марта" -> {
-            if (data[0].toInt() in 1..31) {
-                data[1] = "03"
-            } else return ""
-        }
+            "февраля" -> {
+                if (vis) {
+                    if (data[0].toInt() in 1..29) {
+                        data[1] = "02"
+                    } else return ""
+                } else {
+                    if (data[0].toInt() in 1..28) {
+                        data[1] = "02"
+                    } else return ""
+                }
+            }
 
-        "апреля" -> {
-            if (data[0].toInt() in 1..30) {
-                data[1] = "04"
-            } else return ""
-        }
+            "марта" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "03"
+                } else return ""
+            }
 
-        "мая" -> {
-            if (data[0].toInt() in 1..31) {
-                data[1] = "05"
-            } else return ""
-        }
+            "апреля" -> {
+                if (data[0].toInt() in 1..30) {
+                    data[1] = "04"
+                } else return ""
+            }
 
-        "июня" -> {
-            if (data[0].toInt() in 1..30) {
-                data[1] = "06"
-            } else return ""
-        }
+            "мая" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "05"
+                } else return ""
+            }
 
-        "июля" -> {
-            if (data[0].toInt() in 1..31) {
-                data[1] = "07"
-            } else return ""
-        }
+            "июня" -> {
+                if (data[0].toInt() in 1..30) {
+                    data[1] = "06"
+                } else return ""
+            }
 
-        "августа" -> {
-            if (data[0].toInt() in 1..31) {
-                data[1] = "08"
-            } else return ""
-        }
+            "июля" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "07"
+                } else return ""
+            }
 
-        "сентября" -> {
-            if (data[0].toInt() in 1..30) {
-                data[1] = "09"
-            } else return ""
-        }
+            "августа" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "08"
+                } else return ""
+            }
 
-        "октября" -> {
-            if (data[0].toInt() in 1..31) {
-                data[1] = "10"
-            } else return ""
-        }
+            "сентября" -> {
+                if (data[0].toInt() in 1..30) {
+                    data[1] = "09"
+                } else return ""
+            }
 
-        "ноября" -> {
-            if (data[0].toInt() in 1..30) {
-                data[1] = "11"
-            } else return ""
-        }
+            "октября" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "10"
+                } else return ""
+            }
 
-        "декабря" -> {
-            if (data[0].toInt() in 1..31) {
-                data[1] = "12"
-            } else return ""
-        }
+            "ноября" -> {
+                if (data[0].toInt() in 1..30) {
+                    data[1] = "11"
+                } else return ""
+            }
 
-        else -> return ""
+            "декабря" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "12"
+                } else return ""
+            }
+
+            else -> return ""
+        }
+        if (data[0].length != 2) {
+            data[0] = "0" + data[0]
+        }
+        return data[0] + "." + data[1] + "." + data[2]
+    } catch (e: NumberFormatException) {
+        return ""
     }
-    if (data[0].length != 2) {
-        data[0] = "0" + data[0]
-    }
-    return data[0] + "." + data[1] + "." + data[2]
 }
 
 /**
