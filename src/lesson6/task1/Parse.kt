@@ -188,7 +188,108 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val n = digital.split(".")
+    var data = mutableListOf<String>()
+    for (part in n) {
+        data.add(part)
+    }
+
+    if (data.size != 3) {
+        return ""
+    }
+    try {
+        val vis =
+            data[2].toInt() % 100 == 0 && data[2].toInt() % 400 == 0 || data[2].toInt() % 4 == 0 && data[2].toInt() % 100 != 0
+        when (data[1]) {
+            "01" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "января"
+                } else return ""
+            }
+
+            "02" -> {
+                if (vis) {
+                    if (data[0].toInt() in 1..29) {
+                        data[1] = "февраля"
+                    } else return ""
+                } else {
+                    if (data[0].toInt() in 1..28) {
+                        data[1] = "февраля"
+                    } else return ""
+                }
+            }
+
+            "03" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "марта"
+                } else return ""
+            }
+
+            "04" -> {
+                if (data[0].toInt() in 1..30) {
+                    data[1] = "апреля"
+                } else return ""
+            }
+
+            "05" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "мая"
+                } else return ""
+            }
+
+            "06" -> {
+                if (data[0].toInt() in 1..30) {
+                    data[1] = "июня"
+                } else return ""
+            }
+
+            "07" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "июля"
+                } else return ""
+            }
+
+            "08" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "августа"
+                } else return ""
+            }
+
+            "09" -> {
+                if (data[0].toInt() in 1..30) {
+                    data[1] = "сентября"
+                } else return ""
+            }
+
+            "10" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "октября"
+                } else return ""
+            }
+
+            "11" -> {
+                if (data[0].toInt() in 1..30) {
+                    data[1] = "ноября"
+                } else return ""
+            }
+
+            "12" -> {
+                if (data[0].toInt() in 1..31) {
+                    data[1] = "декабря"
+                } else return ""
+            }
+
+            else -> return ""
+        }
+        if (data[0].startsWith("0")) {
+            data[0] = data[0].replace("0","")
+        }
+        return data[0] + " " + data[1] + " " + data[2]
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 /**
  * Средняя (4 балла)
