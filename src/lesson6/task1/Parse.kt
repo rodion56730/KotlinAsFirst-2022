@@ -308,15 +308,15 @@ fun dateDigitToStr(digital: String): String {
  */
 fun flattenPhoneNumber(phone: String): String {
     val r = Regex("[a-z+_]+")
-    val r1 = Regex("[-() ]+")
+    val r1 = Regex("[-() \n]+")
     val ph = phone.replace(r1, "")
     try {
         if (ph[0] == '+') {
-            if (ph.substring(1).contains(r) || ph.substring(1).length == 11) {
+            if (ph.substring(1).contains(r) || ph.substring(1).length < 4) {
                 return ""
             }
         } else {
-            if (ph.contains(r) || ph.length == 11) {
+            if (ph.contains(r) || ph.length < 4) {
                 return ""
             }
         }
