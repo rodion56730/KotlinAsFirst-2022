@@ -2,6 +2,7 @@
 
 package lesson6.task1
 
+import java.lang.IndexOutOfBoundsException
 import java.lang.NumberFormatException
 
 // Урок 6: разбор строк, исключения
@@ -308,18 +309,21 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     val r = Regex("[a-z+_]+")
     val r1 = Regex("[-() ]+")
-    var ph = phone.replace(r1, "")
-    if (ph[0] == '+') {
-        if (ph.substring(1).contains(r)) {
-            return ""
+    val ph = phone.replace(r1, "")
+    try {
+        if (ph[0] == '+') {
+            if (ph.substring(1).contains(r) || ph.substring(1).length == 11) {
+                return ""
+            }
+        } else {
+            if (ph.contains(r) || ph.length == 11) {
+                return ""
+            }
         }
+        return ph
+    } catch (e: IndexOutOfBoundsException){
+        return ""
     }
-    else {
-        if (ph.contains(r)) {
-            return ""
-        }
-    }
-    return ph
 }
 
 /**
