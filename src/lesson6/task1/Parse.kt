@@ -283,7 +283,7 @@ fun dateDigitToStr(digital: String): String {
             else -> return ""
         }
         if (data[0].startsWith("0")) {
-            data[0] = data[0].replace("0","")
+            data[0] = data[0].replace("0", "")
         }
         return data[0] + " " + data[1] + " " + data[2]
     } catch (e: NumberFormatException) {
@@ -305,7 +305,22 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val r = Regex("[a-z+_]+")
+    val r1 = Regex("[-() ]+")
+    var ph = phone.replace(r1, "")
+    if (ph[0] == '+') {
+        if (ph.substring(1).contains(r)) {
+            return ""
+        }
+    }
+    else {
+        if (ph.contains(r)) {
+            return ""
+        }
+    }
+    return ph
+}
 
 /**
  * Средняя (5 баллов)
