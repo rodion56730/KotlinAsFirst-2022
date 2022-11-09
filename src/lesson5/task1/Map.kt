@@ -99,19 +99,13 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    val numbersMap = mutableMapOf<Int, List<String>>()
+    val numbersMap = mutableMapOf<Int, MutableList<String>>()
     if (grades.isNotEmpty()) {
-        val max = (grades.maxBy { it.value }).value
-        val min = (grades.minBy { it.value }).value
-        for (i in max downTo min) {
-            val names = mutableListOf<String>()
-            for ((key, value) in grades) {
-                if (value == i) {
-                    names.add(key)
-                }
-            }
-            if (names.isNotEmpty()) {
-                numbersMap[i] = names
+        for ((key, value) in grades) {
+            if (numbersMap.containsKey(value)) {
+                numbersMap[value]?.add(key)
+            } else {
+                numbersMap[value] = mutableListOf(key)
             }
         }
     }
@@ -129,14 +123,16 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    var flag = true
     for ((key, value) in a) {
-        if (!(b.containsKey(key) && b.containsValue(value))) {
-            flag = false
-            break
+        if ((b.containsKey(key))) {
+            if (b[key] != value) {
+                return false
+            }
+        } else {
+            return false
         }
     }
-    return flag
+    return true
 }
 
 /**
