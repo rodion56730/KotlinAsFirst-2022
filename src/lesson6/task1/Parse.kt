@@ -2,6 +2,7 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
 import java.lang.IndexOutOfBoundsException
 import java.lang.NumberFormatException
 
@@ -87,88 +88,35 @@ fun dateStrToDigit(str: String): String {
         return ""
     }
     try {
-        val vis =
-            data[2].toInt() % 100 == 0 && data[2].toInt() % 400 == 0 || data[2].toInt() % 4 == 0 && data[2].toInt() % 100 != 0
         when (data[1]) {
-            "января" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "01"
-                } else return ""
-            }
+            "января" -> data[1] = "01"
 
-            "февраля" -> {
-                if (vis) {
-                    if (data[0].toInt() in 1..29) {
-                        data[1] = "02"
-                    } else return ""
-                } else {
-                    if (data[0].toInt() in 1..28) {
-                        data[1] = "02"
-                    } else return ""
-                }
-            }
+            "февраля" -> data[1] = "02"
 
-            "марта" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "03"
-                } else return ""
-            }
+            "марта" -> data[1] = "03"
 
-            "апреля" -> {
-                if (data[0].toInt() in 1..30) {
-                    data[1] = "04"
-                } else return ""
-            }
+            "апреля" -> data[1] = "04"
 
-            "мая" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "05"
-                } else return ""
-            }
+            "мая" -> data[1] = "05"
 
-            "июня" -> {
-                if (data[0].toInt() in 1..30) {
-                    data[1] = "06"
-                } else return ""
-            }
+            "июня" -> data[1] = "06"
 
-            "июля" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "07"
-                } else return ""
-            }
+            "июля" -> data[1] = "07"
 
-            "августа" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "08"
-                } else return ""
-            }
+            "августа" -> data[1] = "08"
 
-            "сентября" -> {
-                if (data[0].toInt() in 1..30) {
-                    data[1] = "09"
-                } else return ""
-            }
+            "сентября" -> data[1] = "09"
 
-            "октября" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "10"
-                } else return ""
-            }
+            "октября" -> data[1] = "10"
 
-            "ноября" -> {
-                if (data[0].toInt() in 1..30) {
-                    data[1] = "11"
-                } else return ""
-            }
+            "ноября" -> data[1] = "11"
 
-            "декабря" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "12"
-                } else return ""
-            }
+            "декабря" -> data[1] = "12"
 
             else -> return ""
+        }
+        if (!(data[0].toInt() >= 1 && data[0].toInt() <= daysInMonth(data[1].toInt(), data[2].toInt()))) {
+            return ""
         }
         if (data[0].length != 2) {
             data[0] = "0" + data[0]
@@ -191,92 +139,26 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val data = digital.split(".").toMutableList()
-
     if (data.size != 3) {
         return ""
     }
     try {
-        val vis =
-            data[2].toInt() % 100 == 0 && data[2].toInt() % 400 == 0 || data[2].toInt() % 4 == 0 && data[2].toInt() % 100 != 0
+        if (!(data[0].toInt() >= 1 && data[0].toInt() <= daysInMonth(data[1].toInt(), data[2].toInt()))) {
+            return ""
+        }
         when (data[1]) {
-            "01" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "января"
-                } else return ""
-            }
-
-            "02" -> {
-                if (vis) {
-                    if (data[0].toInt() in 1..29) {
-                        data[1] = "февраля"
-                    } else return ""
-                } else {
-                    if (data[0].toInt() in 1..28) {
-                        data[1] = "февраля"
-                    } else return ""
-                }
-            }
-
-            "03" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "марта"
-                } else return ""
-            }
-
-            "04" -> {
-                if (data[0].toInt() in 1..30) {
-                    data[1] = "апреля"
-                } else return ""
-            }
-
-            "05" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "мая"
-                } else return ""
-            }
-
-            "06" -> {
-                if (data[0].toInt() in 1..30) {
-                    data[1] = "июня"
-                } else return ""
-            }
-
-            "07" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "июля"
-                } else return ""
-            }
-
-            "08" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "августа"
-                } else return ""
-            }
-
-            "09" -> {
-                if (data[0].toInt() in 1..30) {
-                    data[1] = "сентября"
-                } else return ""
-            }
-
-            "10" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "октября"
-                } else return ""
-            }
-
-            "11" -> {
-                if (data[0].toInt() in 1..30) {
-                    data[1] = "ноября"
-                } else return ""
-            }
-
-            "12" -> {
-                if (data[0].toInt() in 1..31) {
-                    data[1] = "декабря"
-                } else return ""
-            }
-
+            "01" -> data[1] = "января"
+            "02" -> data[1] = "февраля"
+            "03" -> data[1] = "марта"
+            "04" -> data[1] = "апреля"
+            "05" -> data[1] = "мая"
+            "06" -> data[1] = "июня"
+            "07" -> data[1] = "июля"
+            "08" -> data[1] = "августа"
+            "09" -> data[1] = "сентября"
+            "10" -> data[1] = "октября"
+            "11" -> data[1] = "ноября"
+            "12" -> data[1] = "декабря"
             else -> return ""
         }
         if (data[0].startsWith("0")) {
@@ -317,7 +199,7 @@ fun flattenPhoneNumber(phone: String): String {
             }
         }
         return ph
-    } catch (e: IndexOutOfBoundsException){
+    } catch (e: IndexOutOfBoundsException) {
         return ""
     }
 }
