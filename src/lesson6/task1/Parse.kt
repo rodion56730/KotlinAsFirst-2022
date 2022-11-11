@@ -79,11 +79,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val n = str.split(" ")
-    val data = mutableListOf<String>()
-    for (part in n) {
-        data.add(part)
-    }
+    val data = str.split(" ").toMutableList()
     if (data.size != 3) {
         return ""
     }
