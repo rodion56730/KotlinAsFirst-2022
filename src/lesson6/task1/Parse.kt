@@ -185,8 +185,8 @@ fun flattenPhoneNumber(phone: String): String {
     val r1 = Regex("[-() ]+")
     val ph = phone.replace(r1, "")
     try {
-        if (ph[0] == '+') {
-            if (ph.substring(1).contains(r)) {
+        if (ph[0] == '+' ) {
+            if (ph.substring(1).contains(r) || ph[1] != '7') {
                 return ""
             }
         } else {
