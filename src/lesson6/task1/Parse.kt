@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.IllegalArgumentException
 import java.lang.IndexOutOfBoundsException
 import java.lang.NumberFormatException
 
@@ -114,9 +115,7 @@ fun dateStrToDigit(str: String): String {
         if (!(data[0].toInt() >= 1 && data[0].toInt() <= daysInMonth(data[1].toInt(), data[2].toInt()))) {
             return ""
         }
-        if (data[0].length != 2) {
-            data[0] = "0" + data[0]
-        }
+        data[0] = twoDigitStr(data[0].toInt())
         return data[0] + "." + data[1] + "." + data[2]
     } catch (e: NumberFormatException) {
         return ""
@@ -244,7 +243,19 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val list = description.split("; ").toMutableList()
+    var ans = Pair("", 0.0)
+    for (n in list) {
+        if (n.matches(Regex("""[ ,]?[А-Яа-яёЁ]+[ ,][0-9]+(\.[0-9]+)?"""))) {
+            val d = n.split(" ")
+            if (ans.second < d[1].toDouble()) {
+                ans = Pair(d[0], d[1].toDouble())
+            }
+        }
+    }
+    return ans.first
+}
 
 /**
  * Сложная (6 баллов)

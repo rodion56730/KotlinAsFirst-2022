@@ -296,14 +296,15 @@ fun roman(n: Int): String {
     val rimList = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
     val simList = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
     var num = n
-    var result = ""
-    var i = simList.size - 1
-    while (num > 0) {
-        while (num - simList[i] >= 0) {
-            num -= simList[i]
-            result += rimList[i]
+    val result = buildString {
+        var i = simList.size - 1
+        while (num > 0) {
+            while (num - simList[i] >= 0) {
+                num -= simList[i]
+                append(rimList[i])
+            }
+            i--
         }
-        i--
     }
     return result
 }
