@@ -261,7 +261,7 @@ fun mostExpensive(description: String): String {
     val list = description.split("; ").toMutableList()
     var ans = Pair("", -1.0)
     for (n in list) {
-        if (n.matches(Regex("""\s?[А-Яа-яёЁA-Za-z]+\s[0-9]+(\.[0-9]+)?"""))) {
+        if (n.matches(Regex("""\s?.*\s[0-9]+(\.[0-9]+)?"""))) {
             val d = n.split(" ")
             if (ans.second < d[1].toDouble()) {
                 ans = Pair(d[0], d[1].toDouble())
