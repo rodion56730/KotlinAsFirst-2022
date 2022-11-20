@@ -268,7 +268,11 @@ fun mostExpensive(description: String): String {
             }
         }
     }
-    return ans.first
+    return if (ans.first.matches(Regex("""\s?[А-Яа-яёЁA-Za-z]+"""))) {
+        ans.first
+    } else {
+        "Any good with price " + ans.second.toString()
+    }
 }
 
 /**
