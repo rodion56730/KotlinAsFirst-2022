@@ -267,7 +267,7 @@ fun mostExpensive(description: String): String {
                 ans = Pair(d[0], d[1].toDouble())
             }
             if (!(ans.first.matches(Regex("""\s?[А-Яа-яёЁA-Za-z]+""")))) {
-                ans = Pair("Any good with price " + d[1], d[1].toDouble())
+                ans = Pair("Any good with price " + d[1].toDouble().toString(), d[1].toDouble())
             }
         }
     }
