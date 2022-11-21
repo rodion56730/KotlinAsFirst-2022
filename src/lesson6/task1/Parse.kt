@@ -234,9 +234,9 @@ fun plusMinus(expression: String): Int = TODO()
 fun firstDuplicateIndex(str: String): Int {
     val a = str.lowercase()
     var ans = -1
-    if (a.contains(Regex("""(.*)\s\1"""))) {
+    if (a.contains(Regex("""([^ ]+)\s\1"""))) {
         val aList = a.split(" ").toMutableList()
-        for (n in 0..aList.size) {
+        for (n in 0 until aList.size - 1) {
             if (aList[n] == aList[n + 1]) {
                 return ans + 1
             }
