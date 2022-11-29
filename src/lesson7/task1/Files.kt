@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.util.*
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -107,7 +108,26 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val b = mapOf(
+        "жы" to "жи",
+        "шы" to "ши",
+        "чя" to "ча",
+        "щя" to "ща",
+        "жю" to "жу",
+        "чю" to "чу",
+        "шю" to "шу",
+        "щю" to "щу"
+    )
+    val writer = File(outputName).bufferedWriter()
+    for (line in File(inputName).bufferedReader().readLines()) {
+        var temp = line
+        for ((key, value) in b) {
+            temp = temp.replace(key.toRegex(RegexOption.IGNORE_CASE), value.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }  )
+        }
+        writer.write(temp.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+        writer.newLine()
+    }
+    writer.close()
 }
 
 /**
