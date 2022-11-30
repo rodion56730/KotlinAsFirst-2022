@@ -3,7 +3,6 @@
 package lesson7.task1
 
 import java.io.File
-import java.util.*
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -116,17 +115,38 @@ fun sibilants(inputName: String, outputName: String) {
         "жю" to "жу",
         "чю" to "чу",
         "шю" to "шу",
-        "щю" to "щу"
+        "щю" to "щу",
+        "жя" to "жа",
+        "шя" to "ша",
     )
     val writer = File(outputName).bufferedWriter()
+    val upChar = mutableListOf<Int>()
     for (line in File(inputName).bufferedReader().readLines()) {
+        upChar.clear()
         var temp = line
-        for ((key, value) in b) {
-            temp = temp.replace(key.toRegex(RegexOption.IGNORE_CASE), value.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }  )
+        for (w in temp.indices) {
+            if (temp[w].isUpperCase()) {
+                upChar.add(w)
+            }
         }
-        writer.write(temp.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+        for ((key, value) in b) {
+            temp = temp.replace(Regex(key, RegexOption.IGNORE_CASE), value)
+        }
+        val ans = buildString {
+            var i = 0
+            for (ind in temp.indices) {
+                if (i < upChar.size && ind == upChar[i]) {
+                    append(temp[ind].uppercase())
+                    i++
+                    continue
+                }
+                append(temp[ind])
+            }
+        }
+        writer.write(ans)
         writer.newLine()
     }
+
     writer.close()
 }
 
