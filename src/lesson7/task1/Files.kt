@@ -118,6 +118,8 @@ fun sibilants(inputName: String, outputName: String) {
         "щю" to "щу",
         "жя" to "жа",
         "шя" to "ша",
+        "чы" to "чи",
+        "щы" to "щи"
     )
     val writer = File(outputName).bufferedWriter()
     val upChar = mutableListOf<Int>()
