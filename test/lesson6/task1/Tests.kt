@@ -40,7 +40,7 @@ class Tests {
         assertEquals("", dateStrToDigit("23"))
         assertEquals("03.04.2011", dateStrToDigit("3 апреля 2011"))
         assertEquals("", dateStrToDigit("32 сентября 2011"))
-        assertEquals("", dateStrToDigit("29 февраля 1993"))
+        assertEquals("", dateStrToDigit("aaaaaaaa февраля aaaaa"))
     }
 
     @Test
@@ -103,7 +103,7 @@ class Tests {
     @Test
     @Tag("6")
     fun firstDuplicateIndex() {
-        assertEquals(-1, firstDuplicateIndex("Привет"))
+        assertEquals(-1, firstDuplicateIndex("а р а"))
         assertEquals(9, firstDuplicateIndex("Он пошёл в в школу"))
         assertEquals(40, firstDuplicateIndex("Яблоко упало на ветку с ветки оно упало на на землю"))
         assertEquals(9, firstDuplicateIndex("Мы пошли прямо Прямо располагался магазин"))
@@ -112,7 +112,7 @@ class Tests {
     @Test
     @Tag("6")
     fun mostExpensive() {
-        assertEquals("", mostExpensive(""))
+        assertEquals("$", mostExpensive("$ 0"))
         assertEquals("Курица", mostExpensive("Хлеб 39.9; Молоко 62.5; Курица 184.0; Конфеты 89.9"))
         assertEquals("Вино", mostExpensive("Вино 255.0"))
     }
