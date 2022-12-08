@@ -2,6 +2,12 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+import java.lang.IllegalArgumentException
+import java.lang.IndexOutOfBoundsException
+import java.lang.NumberFormatException
+import java.util.*
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +80,48 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val data = str.split(" ").toMutableList()
+    if (data.size != 3) {
+        return ""
+    }
+    try {
+        when (data[1]) {
+            "января" -> data[1] = "01"
+
+            "февраля" -> data[1] = "02"
+
+            "марта" -> data[1] = "03"
+
+            "апреля" -> data[1] = "04"
+
+            "мая" -> data[1] = "05"
+
+            "июня" -> data[1] = "06"
+
+            "июля" -> data[1] = "07"
+
+            "августа" -> data[1] = "08"
+
+            "сентября" -> data[1] = "09"
+
+            "октября" -> data[1] = "10"
+
+            "ноября" -> data[1] = "11"
+
+            "декабря" -> data[1] = "12"
+
+            else -> return ""
+        }
+        if (!(data[0].toInt() >= 1 && data[0].toInt() <= daysInMonth(data[1].toInt(), data[2].toInt()))) {
+            return ""
+        }
+        data[0] = twoDigitStr(data[0].toInt())
+        return data[0] + "." + data[1] + "." + data[2]
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 /**
  * Средняя (4 балла)
@@ -86,7 +133,38 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val data = digital.split(".").toMutableList()
+    if (data.size != 3) {
+        return ""
+    }
+    try {
+        if (!(data[0].toInt() >= 1 && data[0].toInt() <= daysInMonth(data[1].toInt(), data[2].toInt()))) {
+            return ""
+        }
+        when (data[1]) {
+            "01" -> data[1] = "января"
+            "02" -> data[1] = "февраля"
+            "03" -> data[1] = "марта"
+            "04" -> data[1] = "апреля"
+            "05" -> data[1] = "мая"
+            "06" -> data[1] = "июня"
+            "07" -> data[1] = "июля"
+            "08" -> data[1] = "августа"
+            "09" -> data[1] = "сентября"
+            "10" -> data[1] = "октября"
+            "11" -> data[1] = "ноября"
+            "12" -> data[1] = "декабря"
+            else -> return ""
+        }
+        if (data[0].startsWith("0")) {
+            data[0] = data[0].replace("0", "")
+        }
+        return data[0] + " " + data[1] + " " + data[2]
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 /**
  * Средняя (4 балла)
@@ -102,7 +180,11 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String =
+    if (phone.matches(Regex("""(\+[ -]*[0-9]+)?[ -]*(\([ -]*[0-9]+[0-9 -]*\))?[ -]*[0-9]+[0-9 -]*""")))
+        phone.filter { it !in "()- " }
+    else
+        ""
 
 /**
  * Средняя (5 баллов)
@@ -149,7 +231,7 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int = Regex("""([^ ]+)\s\1""").find(str.lowercase())?.range?.first ?: -1
 
 /**
  * Сложная (6 баллов)
@@ -162,7 +244,19 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val list = description.split("; ")
+    var ans = Pair("", -1.0)
+    for (n in list) {
+        if (n.matches(Regex("""\s?.*\s[0-9]+(\.[0-9]+)?"""))) {
+            val d = n.split(" ")
+            if (ans.second < d[1].toDouble()) {
+                ans = Pair(d[0], d[1].toDouble())
+            }
+        }
+    }
+    return ans.first
+}
 
 /**
  * Сложная (6 баллов)

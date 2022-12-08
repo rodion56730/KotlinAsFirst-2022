@@ -3,10 +3,7 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -101,15 +98,12 @@ fun fib(n: Int): Int = (((sqrt(5.0) + 1) / 2).pow(n) / sqrt(5.0) + 0.5).toInt()
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var buf = -1
-    for (i in 2..n / 2) {
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
         if (n % i == 0) {
-            buf = i
-            break
+            return i
         }
     }
-    if (buf == -1) return n
-    return buf
+    return n
 }
 
 /**
@@ -117,17 +111,8 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var buf = -1
-    for (i in n / 2 downTo 1) {
-        if (n % i == 0) {
-            buf = i
-            break
-        }
-    }
-    if (buf == -1) return n
-    return buf
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
+
 
 /**
  * Простая (2 балла)
@@ -183,13 +168,13 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    val min1 = minOf(n, m)
-    for (i in 2..min1) {
+    val min1 = maxOf(n, m)
+    for (i in 2..sqrt(min1.toDouble()).toInt()) {
         if (n % i == 0 && m % i == 0) {
             return false
         }
     }
-    return true
+    return !((n % m == 0 || m % n == 0) && m != 1 && n != 1)
 }
 
 /**
@@ -219,10 +204,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    if (n == revert(n)) return true
-    return false
-}
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
@@ -237,12 +219,16 @@ fun hasDifferentDigits(n: Int): Boolean {
     var num2 = 0
     val s = n % 10
     var sum = 0
+    var sum2 = 1
+    var sum3 = 1
     while (num1 > 0) {
         sum += s
+        sum3 *= s
         num2 += num1 % 10
+        sum2 *= num1 % 10
         num1 /= 10
     }
-    return (num2 != sum)
+    return (num2 != sum) || (sum2 != sum3)
 }
 
 /**
@@ -254,7 +240,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = kotlin.math.sin(x)
+fun sin(x: Double, eps: Double): Double = TODO()
 
 /**
  * Средняя (4 балла)

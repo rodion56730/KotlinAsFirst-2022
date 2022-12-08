@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import kotlin.math.max
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -96,7 +98,17 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val numbersMap = mutableMapOf<Int, MutableList<String>>()
+    for ((key, value) in grades) {
+        if (numbersMap.containsKey(value)) {
+            numbersMap[value]?.add(key)
+        } else {
+            numbersMap[value] = mutableListOf(key)
+        }
+    }
+    return numbersMap
+}
 
 /**
  * Простая (2 балла)
@@ -108,7 +120,13 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((key, value) in a) {
+        if (b[key] != value)
+            return false
+    }
+    return true
+}
 
 /**
  * Простая (2 балла)
@@ -183,7 +201,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 
 /**
  * Средняя (3 балла)
@@ -277,7 +295,15 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val t = mutableMapOf<Int, Int>()
+    for (i in list.indices) {
+        if (number - list[i] in t)
+            return t[number - list[i]]!! to i
+        else t[list[i]] = i
+    }
+    return Pair(-1, -1)
+}
 
 /**
  * Очень сложная (8 баллов)
@@ -300,4 +326,50 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    var t = arrayOf<Array<Set<String>>>()
+    val names = mutableListOf<String>()
+    val weights = mutableListOf<Int>()
+    val values = mutableListOf<Int>()
+    for ((key, value) in treasures) {
+        names += key
+        weights += value.first
+        values += value.second
+    }
+    for (i in 0..treasures.size) {
+        var array = arrayOf<Set<String>>()
+        for (j in 0..capacity) {
+            array += setOf("")
+        }
+        t += array
+    }
+    for (i in 0..treasures.size) {
+        for (j in 0..capacity) {
+            if (i == 0 || j == 0) {
+                t[i][j] = setOf()
+            } else {
+                if (weights[i - 1] > j) {
+                    t[i][j] = t[i - 1][j];
+                } else {
+                    var prev = 0
+                    for (z in t[i - 1][j]) {
+                        prev += treasures[z]?.second ?: 0
+                    }
+                    var sum = 0
+                    for (h in t[i - 1][j - weights[i - 1]]) {
+                        sum += treasures[h]?.second ?: 0
+                    }
+                    val byFormula = values[i - 1] + sum
+                    if (prev > byFormula) {
+                        t[i][j] = t[i - 1][j]
+                    } else {
+                        t[i][j] = t[i - 1][j - weights[i - 1]] + names[i - 1]
+                    }
+                }
+            }
+        }
+    }
+    return t[weights.size][capacity]
+}
+
+
