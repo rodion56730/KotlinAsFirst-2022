@@ -573,7 +573,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         ans /= 10
     }
     count = list[list.lastIndex].toString().length
-    list.remove(list[list.lastIndex])
+    list.removeAt(list.lastIndex)
     if (count > list[list.lastIndex].toString().length) {
         writer.write("$lhv | $rhv")
     } else {
@@ -639,14 +639,15 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             s++
         }
         if (list[i - 1].toString().length == 1) {
-            if (list[i].toString().length + 1 == list[i - 2].toString().length) {
+            if ((list[i].toString().length + 1 == list[i - 2].toString().length) && (list[i].toString().length != list[i-1].toString().length)) {
+                println(i)
                 count--
             }
         }
         count += (t - 1)
     }
     writer.newLine()
-    //println(list)
+    println(list)
     p = 0
     while (p + (lhv % rhv).toString().length < s) {
         writer.write(" ")
