@@ -584,6 +584,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     for (j in 0 until lhv.toString().length - list[list.lastIndex].toString().length) {
         writer.write(" ")
     }
+    var s = 0
     writer.write("   " + (lhv / rhv).toString())
     count = 0
     var t = 0
@@ -592,9 +593,10 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         writer.write("-")
         t++
         count++
+        s++
     }
     count -= 2
-    var s = 0
+
     var p = 0
     //println(count)
     for (i in list.lastIndex - 1 downTo 1 step 2) {
@@ -649,7 +651,6 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     }
     writer.newLine()
     p = 0
-    if (s == 0) s = 2
     while (p + (lhv % rhv).toString().length < s) {
         writer.write(" ")
         p++
