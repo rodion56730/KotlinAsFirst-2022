@@ -366,6 +366,11 @@ Basic, Ruby, Swift.
             File("temp.txt").delete()
         }
         test(
+            601264,
+            2,
+            " 601264 | 2\n-6        300632\n--\n 00\n -0\n --\n  01\n  -0\n  --\n   12\n  -12\n  ---\n    06\n    -6\n    --\n     04\n     -4\n     --\n      0"
+        )
+        test(
             19935,
             22,
             """
@@ -440,7 +445,8 @@ Basic, Ruby, Swift.
                 "Lada Niva" to "Шел",
                 "BMW M5" to "Лукойл",
                 "Копейка" to "Газпром",
-                "Трактор" to "Лукойл"),
+                "Трактор" to "Лукойл"
+            ),
             test(
                 mapOf(
                     "Lada Vesta" to "бензин 98",

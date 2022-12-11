@@ -669,12 +669,14 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         writer.newLine()
         writer.write(text.toString())
         t = 0
+
         while (t <= list[i - 1].toString().length) {
             writer.write("-")
             t++
             buf++
         }
         count += (t - 1)
+        if ((list[i] == list[i - 1]) && (list[i].toString().length != 1)) count--
     }
     println(count)
     writer.newLine()
@@ -773,4 +775,3 @@ fun test(carPetrols: Map<String, String>, gasStations: String): Map<String, Stri
     }
     return ans2
 }
-
