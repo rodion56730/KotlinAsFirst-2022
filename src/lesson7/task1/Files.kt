@@ -561,7 +561,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var ans = lhv / rhv
     var temp: Int
     var count = 0
-    var s = 0
+    var t = 0
     if (rhv > lhv) {
         list.add(0)
     }
@@ -577,24 +577,22 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     list.removeAt(list.lastIndex)
     if (count > list[list.lastIndex].toString().length) {
         writer.write("$lhv | $rhv")
-        s++
+        t++
     } else {
         writer.write(" $lhv | $rhv")
     }
     writer.newLine()
     writer.write("-" + list[list.lastIndex].toString())
-    while(s + list.last().toString().length != lhv.toString().length){
+    while (t + list.last().toString().length != lhv.toString().length) {
         writer.write(" ")
-        s++
+        t++
     }
-    s = 9
     writer.write("   " + (lhv / rhv).toString())
-    var t = 0
+    t = 0
     writer.newLine()
     while (t <= list[list.lastIndex].toString().length) {
         writer.write("-")
         t++
-        s++
     }
     count = t
     var buf = 0
@@ -659,20 +657,17 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         writer.write(list[i].toString())
         t = 0
         writer.newLine()
+        var text = StringBuilder()
         if (list[i].toString().length > list[i - 1].toString().length) t--
         while (t + list[i].toString().length != count) {
-            writer.write(" ")
-            t++
-        }
-        writer.write("-" + list[i - 1].toString())
-        writer.newLine()
-        t = 0
-        if (list[i].toString().length > list[i - 1].toString().length) t--
-        while (t + list[i].toString().length != count) {
-            writer.write(" ")
+            text.append(" ")
             t++
             buf++
         }
+        writer.write(text.toString())
+        writer.write("-" + list[i - 1].toString())
+        writer.newLine()
+        writer.write(text.toString())
         t = 0
         while (t <= list[i - 1].toString().length) {
             writer.write("-")
