@@ -1,8 +1,10 @@
 package lesson7.task1
 
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.io.File
 
 class Tests {
@@ -268,7 +270,11 @@ Basic, Ruby, Swift.
                       <body>
                         <p>
                           <ul>
-                            <li>ytre
+                            <li>Утро
+                            </li>
+                            <li>Утро
+                            </li>
+                            <li>Утро
                             </li>
                           </ul>
                         </p>
@@ -359,35 +365,6 @@ Basic, Ruby, Swift.
             assertFileContent("temp.txt", res.trimIndent())
             File("temp.txt").delete()
         }
-
-        test(
-            19935,
-            22,
-            """
-              19935 | 22
-             -198     906
-             ----
-                13
-                -0
-                --
-                135
-               -132
-               ----
-                  3
-             """
-        )
-
-        test(
-            2,
-            20,
-            """
-              2 | 20
-             -0   0
-             --
-              2
-             """
-        )
-
         test(
             99999,
             1,
@@ -410,7 +387,93 @@ Basic, Ruby, Swift.
                   0
              """
         )
+        test(
+            19935,
+            22,
+            """
+              19935 | 22
+             -198     906
+             ----
+                13
+                -0
+                --
+                135
+               -132
+               ----
+                  3
+             """
+        )
+        test(
+            2,
+            20,
+            """
+              2 | 20
+             -0   0
+             --
+              2
+             """
+        )
+
+
+
+
+
+
+
+
+
+
+
+
 
         File("temp.txt").delete()
     }
+
+    @Test
+    fun test() {
+        assertEquals(
+            mapOf(
+                "Lada Vesta" to "Газпром",
+                "Lada Niva" to "Шел",
+                "BMW M5" to "Лукойл",
+                "Копейка" to "Газпром",
+                "Трактор" to "Лукойл"),
+            test(
+                mapOf(
+                    "Lada Vesta" to "бензин 98",
+                    "Lada Niva" to "дизель",
+                    "BMW M5" to "бензин 95",
+                    "Копейка" to "бензин 88",
+                    "Трактор" to "солярка"
+                ),
+                " Лукойл: бензин 95 - 44.66; дизель - 60.76; солярка - 10;\n Газпром: бензин 98 - 50.00; бензин 88 - 34.30;\n Шел: бензин 66 - 23.00; дизель - 55.50;"
+            )
+        )
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
+            test(
+                mapOf(
+                    "Lada Vesta" to "бензин 98",
+                    "Lada Niva" to "дизель",
+                    "BMW M5" to "бензин 95",
+                    "Копейка" to "бензин 88",
+                    "Трактор" to "солярка"
+                ),
+                " Лукойл бензин 95 - 44.66; дизель - 60.76; солярка - 10;\n Газпром: бензин 98 - 50.00; бензин 88 - 34.30;\n Шел: бензин 66 - 23.00; дизель - 55.50;"
+            )
+        }
+        Assertions.assertThrows(IllegalStateException::class.java) {
+            test(
+                mapOf(
+                    "Lada Vesta" to "бензин 98",
+                    "Lada Niva" to "дизель",
+                    "BMW M5" to "бензин 95",
+                    "Копейка" to "бензин 88",
+                    "Трактор" to "ярка"
+                ),
+                " Лукойл: бензин 95 - 44.66; дизель - 60.76; солярка - 10;\n Газпром: бензин 98 - 50.00; бензин 88 - 34.30;\n Шел: бензин 66 - 23.00; дизель - 55.50;"
+            )
+        }
+    }
 }
+
+

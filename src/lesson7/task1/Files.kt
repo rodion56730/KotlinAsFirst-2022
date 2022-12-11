@@ -2,9 +2,8 @@
 
 package lesson7.task1
 
-import kotlinx.html.*
-import kotlinx.html.stream.appendHTML
 import java.io.File
+import java.lang.IndexOutOfBoundsException
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -442,52 +441,55 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 
-fun helpFun(i: Int, fileList: List<String>): Pair<Int, String> {
-    var ans = ""
-    var temp = 0
-    if (fileList[i].startsWith('*')) {
-        ans = StringBuilder().appendHTML().li {
-            for (lineInd in i until fileList.size) {
-                if (fileList[lineInd].startsWith('*')) {
-                    temp = lineInd
-                    break
-                }
-            }
-        }.toString()
-    }
-    return Pair(temp, ans)
-}
+//fun helpFun(i: Int, fileList: List<String>): Pair<Int, StringBuilder> {
+//
+//    var ans = StringBuilder()
+//    var temp = 0
+//    if (fileList[i].startsWith('*')) {
+//        ans = StringBuilder().appendHTML().li {
+//            for (lineInd in i until fileList.size) {
+//                if (fileList[lineInd].startsWith('*')) {
+//                    temp = lineInd
+//                    +fileList[lineInd].substring(1)
+//                    break
+//                }
+//            }
+//        }
+//    }
+//    return Pair(temp, ans)
+//}
 
 fun markdownToHtmlLists(inputName: String, outputName: String) {
-    val file = File(inputName).bufferedReader().readLines()
-    val ans = StringBuilder().appendHTML().html {
-        body {
-            p {
-                if (file[0].startsWith('*')) {
-                    ul {
-                        var lineInd = 0
-                        while (lineInd < file.size) {
-                            lineInd = helpFun(lineInd, file).first
-                            +helpFun(lineInd, file).second
-                            lineInd++
-                        }
-                    }
-                } else {
-                    ol {
-                        var lineInd = 0
-                        while (lineInd < file.size) {
-                            lineInd = helpFun(lineInd, file).first
-                            +helpFun(lineInd, file).second
-                            lineInd++
-                        }
-                    }
-                }
-            }
-        }
-    }.toString()
-    val writer = File(outputName).bufferedWriter()
-    writer.write(ans)
-    writer.close()
+    TODO()
+//    val file = File(inputName).bufferedReader().readLines()
+//    val ans = StringBuilder().appendHTML().html {
+//        body {
+//            p {
+//                if (file[0].startsWith('*')) {
+//                    ul {
+//                        var lineInd = 0
+//                        while (lineInd < file.size) {
+//                            lineInd = helpFun(lineInd, file).first
+//                            +helpFun(lineInd, file).second.toString()
+//                            lineInd++
+//                        }
+//                    }
+//                } else {
+//                    ol {
+//                        var lineInd = 0
+//                        while (lineInd < file.size) {
+//                            lineInd = helpFun(lineInd, file).first
+//                            +helpFun(lineInd, file).second.toString()
+//                            lineInd++
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }.toString()
+//    val writer = File(outputName).bufferedWriter()
+//    writer.write(ans)
+//    writer.close()
 }
 
 /**
@@ -553,6 +555,192 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val list = mutableListOf<Int>()
+    var ost = lhv % rhv
+    var ans = lhv / rhv
+    var temp: Int
+    var count = 0
+    if (rhv > lhv) {
+        list.add(0)
+    }
+    list.add(ost)
+    while (ans > 0) {
+        temp = rhv * (ans % 10)
+        list.add(temp)
+        list.add(temp + ost)
+        ost = temp / 10
+        ans /= 10
+    }
+    count = list[list.lastIndex].toString().length
+    list.remove(list[list.lastIndex])
+    if (count > list[list.lastIndex].toString().length) {
+        writer.write("$lhv | $rhv")
+    } else {
+        writer.write(" $lhv | $rhv")
+    }
+    writer.newLine()
+    writer.write("-" + list[list.lastIndex].toString())
+    for (j in 0 until lhv.toString().length - list[list.lastIndex].toString().length) {
+        writer.write(" ")
+    }
+    writer.write("   " + (lhv / rhv).toString())
+    count = 0
+    var t = 0
+    writer.newLine()
+    while (t <= list[list.lastIndex].toString().length) {
+        writer.write("-")
+        t++
+        count++
+    }
+    count -= 2
+    var s = 0
+    var p = 0
+    //println(count)
+    for (i in list.lastIndex - 1 downTo 1 step 2) {
+        writer.newLine()
+        p = 0
+        while (p <= count) {
+            writer.write(" ")
+            p++
+        }
+        if (list[i].toString().length == 1) {
+            writer.write("0" + list[i].toString())
+            if (list[i - 1].toString().length == list[i].toString().length + 1) {
+                count--
+            }
+        } else {
+            writer.write(list[i].toString())
+            if (list[i - 1].toString().length == list[i].toString().length) {
+                count--
+            }
+        }
+        writer.newLine()
+        p = 0
+        while (p <= count) {
+            writer.write(" ")
+            p++
+        }
+        writer.write("-" + list[i - 1].toString())
+        writer.newLine()
+        p = 0
+        s = 0
+        while (p <= count) {
+            writer.write(" ")
+            p++
+            s++
+        }
+        var t = 0
+        while (t <= list[i - 1].toString().length) {
+            writer.write("-")
+            t++
+            s++
+        }
+        if (list[i].toString().length == 1) {
+            if (list[i + 1].toString().length + 1 == list[i + 1].toString().length) {
+                count--
+            }
+        } else {
+            if (list[i + 1].toString().length == list[i + 1].toString().length) {
+                count--
+            }
+        }
+        count += (t - 1)
+    }
+    writer.newLine()
+    p = 0
+    if (s == 0) s = 2
+    while (p + (lhv % rhv).toString().length < s) {
+        writer.write(" ")
+        p++
+    }
+    writer.write((lhv % rhv).toString())
+    //print(list)
+    writer.close()
+}
+
+/**
+ * На вход подается ассоциативный массив carPetrols, в котором
+ * указано какой тип топлива необходим для указанных моделей
+ * автомобилей. Пример:
+ * Lada Vesta - бензин 98
+ * Lada Niva - дизель
+ * BMW M5 - бензин 95
+ * Копейка - бензин 88
+ * Трактор - солярка
+ *
+ * На вход также подается строка gasStations, которая содержит
+ * информацию о доступных заправках в следующем формате:
+ * *Название заправки*: *вид топлива* - *цена*; *вид топлива* - *цена*; ...
+ *
+ * Пример:
+ * Лукойл: бензин 95 - 44.66; дизель - 60.76; солярка - 10;
+ * Газпром: бензин 98 - 50.00; бензин 88 - 34.30;
+ * Shell: бензин 66 - 23.00; дизель - 55.50;
+ *
+ * Заправки отделены друг от друга переносами строк
+ *
+ * Необходимо для каждой марки автомобиля из carPetrols найти
+ * наиболее выгодную заправку. Если ни одна из доступных заправок
+ * не продает топливо необходимого вида следует выбросить
+ * IllegalStateException.
+ *
+ * Для приведенного примера ответ должен быть следующим:
+ * Lada Vesta - Газпром
+ * Lada Niva - Shell
+ * BMW M5 - Лукойл
+ * Копейка - Газпром
+ * Трактор - Лукойл
+ *
+ * При нарушении формата входных данных следует выбросить IllegalArgumentException.
+ *
+ * Имя функции и тип результата функции предложить самостоятельно;
+ * в задании указан тип Collection<Any>, то есть коллекция объектов
+ * произвольного типа, можно (и нужно) изменить как вид коллекции,
+ * так и тип её элементов.
+ *
+ * Кроме функции, следует написать тесты,
+ * подтверждающие её работоспособность.
+ */
+fun test(carPetrols: Map<String, String>, gasStations: String): Map<String, String> {
+    val stations = gasStations.split("\n")
+    val ans = mutableMapOf<String, Double>()
+    val ans2 = mutableMapOf<String, String>()
+    var temp: String
+    var name: String
+    var price: Double
+    for (i in stations) {
+        if (!i.contains(
+                Regex(
+                    """ [а-яёa-z]+:( [а-яёa-z]+ [0-9]+ - \d(\.\d+)?;(\n)?)+""",
+                    RegexOption.IGNORE_CASE
+                )
+            )
+        ) {//доделать
+            throw IllegalArgumentException()
+        }
+    }
+    for ((key, value) in carPetrols) {
+        for (i in stations) {
+            temp = Regex("""$value - [0-9]+\.[0-9]+""", RegexOption.IGNORE_CASE).find(i)?.value ?: ""
+            price = (Regex("""[0-9]+\.[0-9]+""", RegexOption.IGNORE_CASE).find(temp)?.value
+                ?: throw IllegalArgumentException()).toDouble()
+            name = Regex("""([а-яё]+)""", RegexOption.IGNORE_CASE).find(i)?.value ?: throw IllegalArgumentException()
+            if (ans[key] == null) {
+                ans[key] = price
+                ans2[key] = name
+            }
+            if (ans[key] != null && ans[key]!! > price) {
+                ans[key] = price
+                ans2[key] = name
+            }
+        }
+    }
+    for ((key, value) in ans2) {
+        if (value == "") {
+            throw IllegalStateException()
+        }
+    }
+    return ans2
 }
 
