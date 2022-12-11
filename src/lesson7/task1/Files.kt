@@ -608,7 +608,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         }
         if (list[i].toString().length == 1) {
             writer.write("0" + list[i].toString())
-            if (list[i - 1].toString().length == list[i].toString().length + 1) {
+            if (list[i - 1].toString().length == list[i + 1].toString().length + 1) {
                 count--
             }
         } else {
@@ -638,25 +638,21 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             t++
             s++
         }
-        if (list[i].toString().length == 1) {
-            if (list[i + 1].toString().length + 1 == list[i + 1].toString().length) {
-                count--
-            }
-        } else {
-            if (list[i + 1].toString().length == list[i + 1].toString().length) {
+        if (list[i - 1].toString().length == 1) {
+            if (list[i].toString().length + 1 == list[i - 2].toString().length) {
                 count--
             }
         }
         count += (t - 1)
     }
     writer.newLine()
+    //println(list)
     p = 0
     while (p + (lhv % rhv).toString().length < s) {
         writer.write(" ")
         p++
     }
     writer.write((lhv % rhv).toString())
-    //print(list)
     writer.close()
 }
 
