@@ -4,6 +4,7 @@ package lesson7.task1
 
 import java.io.File
 import java.lang.IndexOutOfBoundsException
+import kotlin.math.max
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -597,9 +598,11 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     list.reverse()
     list.removeAt(0)
     var buf: Int
+    var maxlen = 0
     for (i in 0..(list.size - 2) step 2) {
         writer.newLine()
         buf = 0
+        maxlen = max(list[i].toString().length, list[i + 1].toString().length + 1)
         if (list[i].toString().length == 1) buf++
         while (buf + list[i].toString().length <= t) {
             writer.write(" ")
@@ -614,18 +617,19 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             buf++
         }
         writer.write("-" + list[i + 1].toString())
-        buf = 1
+        buf = 0
         writer.newLine()
-        while (buf + list[i + 1].toString().length <= t) {
+        while (buf + maxlen <= t) {
             writer.write(" ")
             buf++
         }
         buf = 1
-        while (buf <= list[i + 1].toString().length + 1) {
+        while (buf <= maxlen) {
+
             writer.write("-")
             buf++
         }
-        t += (buf - list[i + 1].toString().length - 1)
+        t += (buf - maxlen)
     }
 //        writer.newLine()
 //        p = 0
