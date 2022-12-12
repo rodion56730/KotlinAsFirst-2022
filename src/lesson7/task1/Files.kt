@@ -644,9 +644,15 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
 //        count += (t-1)
 //        print(count)
         buf = 0
-        var t = 0
+        t=0
         writer.newLine()
-        if (list[i].toString().length == 1) t++ //t++ приближает конец цикла так как на 0 больше
+        if (list[i].toString().length == 1) {
+            if(list[i] == 12)print("here")
+            t++
+        }
+        if((list[i+1].toString().length > 1) && (list[i].toString().length == 1)){
+            count--
+        }//t++ приближает конец цикла так как на 0 больше
         while (t + list[i].toString().length != count + 1) {
             writer.write(" ")
             t++
@@ -657,7 +663,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         writer.write(list[i].toString())
         t = 0
         writer.newLine()
-        var text = StringBuilder()
+        val text = StringBuilder()
         if (list[i].toString().length > list[i - 1].toString().length) t--
         while (t + list[i].toString().length != count) {
             text.append(" ")
@@ -676,7 +682,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             buf++
         }
         count += (t - 1)
-        if ((list[i] == list[i - 1]) && (list[i].toString().length != 1)) count--
+        println(count)
     }
     println(count)
     writer.newLine()
