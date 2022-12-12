@@ -365,6 +365,8 @@ Basic, Ruby, Swift.
             assertFileContent("temp.txt", res.trimIndent())
             File("temp.txt").delete()
         }
+        test(847601,5123," 847601 | 5123\n-5123     165\n-----\n 33530\n-30738\n------\n  27921\n -25615\n ------\n   2306")
+        test(889974,2," 889974 | 2\n-8        444987\n--\n 08\n -8\n --\n  09\n  -8\n  --\n   19\n  -18\n  ---\n    17\n   -16\n   ---\n     14\n    -14\n    ---\n      0")
         test(
             601264,
             2,

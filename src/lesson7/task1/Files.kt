@@ -570,7 +570,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         temp = rhv * (ans % 10)
         list.add(temp)
         list.add(temp + ost)
-        ost = temp / 10
+        ost = (temp + ost) / 10
         ans /= 10
     }
     count = list[list.lastIndex].toString().length
@@ -594,9 +594,39 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         writer.write("-")
         t++
     }
-    count = t
-    var buf = 0
-    for (i in list.lastIndex - 1 downTo 1 step 2) {
+    list.reverse()
+    list.removeAt(0)
+    var buf: Int
+    for (i in 0..(list.size - 2) step 2) {
+        writer.newLine()
+        buf = 0
+        if (list[i].toString().length == 1) buf++
+        while (buf + list[i].toString().length <= t) {
+            writer.write(" ")
+            buf++
+        }
+        if (list[i].toString().length == 1) writer.write("0")
+        writer.write(list[i].toString())
+        buf = 1
+        writer.newLine()
+        while (buf + list[i + 1].toString().length <= t) {
+            writer.write(" ")
+            buf++
+        }
+        writer.write("-" + list[i + 1].toString())
+        buf = 1
+        writer.newLine()
+        while (buf + list[i + 1].toString().length <= t) {
+            writer.write(" ")
+            buf++
+        }
+        buf = 1
+        while (buf <= list[i + 1].toString().length + 1) {
+            writer.write("-")
+            buf++
+        }
+        t += (buf - list[i + 1].toString().length - 1)
+    }
 //        writer.newLine()
 //        p = 0
 //        while (p <= count) {
@@ -643,55 +673,61 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
 //        }
 //        count += (t-1)
 //        print(count)
-        buf = 0
-        t=0
-        writer.newLine()
-        if (list[i].toString().length == 1) {
-            if(list[i] == 12)print("here")
-            t++
-        }
-        if((list[i+1].toString().length > 1) && (list[i].toString().length == 1)){
-            count--
-        }//t++ приближает конец цикла так как на 0 больше
-        while (t + list[i].toString().length != count + 1) {
-            writer.write(" ")
-            t++
-        }
-        if (list[i].toString().length == 1) {
-            writer.write("0")
-        }
-        writer.write(list[i].toString())
-        t = 0
-        writer.newLine()
-        val text = StringBuilder()
-        if (list[i].toString().length > list[i - 1].toString().length) t--
-        while (t + list[i].toString().length != count) {
-            text.append(" ")
-            t++
-            buf++
-        }
-        writer.write(text.toString())
-        writer.write("-" + list[i - 1].toString())
-        writer.newLine()
-        writer.write(text.toString())
-        t = 0
-
-        while (t <= list[i - 1].toString().length) {
-            writer.write("-")
-            t++
-            buf++
-        }
-        count += (t - 1)
-        println(count)
-    }
-    println(count)
+//        buf = 0
+//        t=0
+//        writer.newLine()
+//        if (list[i].toString().length == 1) {
+//            t++
+//        }
+//        if((list[i+1].toString().length > 1) && (list[i].toString().length == 1)){
+//            count--
+//        }//t++ приближает конец цикла так как на 0 больше
+//        while (t + list[i].toString().length != count + 1) {
+//            writer.write(" ")
+//            t++
+//        }
+//        if (list[i].toString().length == 1) {
+//            writer.write("0")
+//        }
+//        writer.write(list[i].toString())
+//        t = 0
+//        writer.newLine()
+//        val text = StringBuilder()
+//        //if (list[i].toString().length > list[i - 1].toString().length) t--
+//        while (t + list[i].toString().length != count) {
+//            text.append(" ")
+//            t++
+//            buf++
+//        }
+//        writer.write(text.toString())
+//        writer.write("-" + list[i - 1].toString())
+//        writer.newLine()
+//        writer.write(text.toString())
+//        t = 0
+//
+//        while (t <= list[i - 1].toString().length) {
+//            writer.write("-")
+//            t++
+//            buf++
+//        }
+//        count += (t - 1)
+//        println(count)
+//    }
+//    println(count)
+//    writer.newLine()
+//    println(list)
+//    if (buf == 0) buf = t
+//    t = 0
+//    while (t + (lhv % rhv).toString().length != buf) {
+//        writer.write(" ")
+//        t++
+//    }
+//    writer.write((lhv % rhv).toString())
     writer.newLine()
-    println(list)
-    if (buf == 0) buf = t
-    t = 0
-    while (t + (lhv % rhv).toString().length != buf) {
+    buf = 1
+    while (buf + (lhv % rhv).toString().length <= t) {
         writer.write(" ")
-        t++
+        buf++
     }
     writer.write((lhv % rhv).toString())
     writer.close()
