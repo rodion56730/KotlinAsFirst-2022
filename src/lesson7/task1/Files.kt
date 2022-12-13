@@ -2,8 +2,10 @@
 
 package lesson7.task1
 
+import kotlinx.html.*
+import kotlinx.html.stream.appendHTML
 import java.io.File
-import java.lang.IndexOutOfBoundsException
+import java.lang.StringBuilder
 import kotlin.math.max
 
 // Урок 7: работа с файлами
@@ -341,7 +343,83 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
+    val reader = File(inputName).bufferedReader().readLines()
+    val writer = File(outputName).bufferedWriter()
+    var flagi = true
+    var flagb = true
+    var flags = true
+    writer.write("<html>")
+    writer.write("<body>")
+    writer.write("<p>")
+    for (line in reader) {
+        if (line.isEmpty()) {
+            writer.write("</p>")
+            writer.write("<p>")
+        }
+        var index = 0
+        while (index < line.length) {
+            var char = line[index]
+            when (char) {
+                '*' -> {
+                    if (index + 2 < line.length && line[index + 1] == '*' && line[index + 2] == '*') {
+                        flagb = if (flagb) {
+                            writer.write("<b>")
+                            false
+                        } else {
+                            writer.write("</b>")
+                            true
+                        }
+                        flagi = if (flagi) {
+                            writer.write("<i>")
+                            false
+                        } else {
+                            writer.write("</i>")
+                            true
+                        }
+                        index += 2
+                    }
+                    else if (index + 1 < line.length && line[index + 1] == '*') {
+                        flagb = if (flagb) {
+                            writer.write("<b>")
+                            false
+                        } else {
+                            writer.write("</b>")
+                            true
+                        }
+                        index++
+                    } else {
+                        flagi = if (flagi) {
+                            writer.write("<i>")
+                            false
+                        } else {
+                            writer.write("</i>")
+                            true
+                        }
+                    }
+                }
+
+                '~' -> {
+                    if (index + 1 < line.length && line[index + 1] == '~') {
+                        flags = if (flags) {
+                            writer.write("<s>")
+                            false
+                        } else {
+                            writer.write("</s>")
+                            true
+                        }
+                        index++
+                    }
+                }
+
+                else -> writer.write(char.toString())
+            }
+            index++
+        }
+    }
+    writer.write("</p>")
+    writer.write("</body>")
+    writer.write("</html>")
+    writer.close()
 }
 
 /**
@@ -803,7 +881,8 @@ fun test(carPetrols: Map<String, String>, gasStations: String): Map<String, Stri
             temp = Regex("""$value - [0-9]+\.[0-9]+""", RegexOption.IGNORE_CASE).find(i)?.value ?: ""
             price = (Regex("""[0-9]+\.[0-9]+""", RegexOption.IGNORE_CASE).find(temp)?.value
                 ?: throw IllegalArgumentException()).toDouble()
-            name = Regex("""([а-яё]+)""", RegexOption.IGNORE_CASE).find(i)?.value ?: throw IllegalArgumentException()
+            name =
+                Regex("""([а-яё]+)""", RegexOption.IGNORE_CASE).find(i)?.value ?: throw IllegalArgumentException()
             if (ans[key] == null) {
                 ans[key] = price
                 ans2[key] = name
