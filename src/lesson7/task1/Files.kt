@@ -348,17 +348,18 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var flagi = true
     var flagb = true
     var flags = true
-    writer.write("<html>")
-    writer.write("<body>")
-    writer.write("<p>")
+    var flagstr = true
+    writer.write("<html><body><p>")
     for (line in reader) {
-        if (line.isEmpty()) {
-            writer.write("</p>")
-            writer.write("<p>")
+        if ((line.isEmpty() || line.matches(Regex(""" +"""))) && flagstr) {
+            writer.write("</p><p>")
+            flagstr = false
+            continue
         }
+        flagstr = true
         var index = 0
         while (index < line.length) {
-            var char = line[index]
+            val char = line[index]
             when (char) {
                 '*' -> {
                     if (index + 2 < line.length && line[index + 1] == '*' && line[index + 2] == '*') {
