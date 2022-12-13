@@ -356,9 +356,9 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             flagstr = false
             continue
         }
-        flagstr = true
         var index = 0
         while (index < line.length) {
+            flagstr = true
             val char = line[index]
             when (char) {
                 '*' -> {
