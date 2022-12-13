@@ -343,8 +343,13 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    val reader = File(inputName).bufferedReader().readLines()
     val writer = File(outputName).bufferedWriter()
+    val reader = File(inputName).bufferedReader().readLines()
+    if(reader.isEmpty()){
+        writer.write("<html><body><p></p></body></html>")
+        writer.close()
+        return
+    }
     var flagi = true
     var flagb = true
     var flags = true
