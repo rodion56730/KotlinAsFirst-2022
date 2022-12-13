@@ -349,16 +349,21 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var flagb = true
     var flags = true
     var flagstr = false
-    writer.write("<html><body><p>")
+    writer.write("<html><body>")
     for (line in reader) {
         if ((line.isEmpty() || line.matches(Regex("""[ \t]*"""))) && flagstr) {
-            writer.write("</p><p>")
+            writer.write("</p>")
             flagstr = false
             continue
         }
+        else{
+            if(line.isNotEmpty() && !flagstr){
+                writer.write("<p>")
+                flagstr = true
+            }
+        }
         var index = 0
         while (index < line.length) {
-            flagstr = true
             val char = line[index]
             when (char) {
                 '*' -> {
@@ -417,9 +422,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             index++
         }
     }
-    writer.write("</p>")
-    writer.write("</body>")
-    writer.write("</html>")
+    writer.write("</body></html>")
     writer.close()
 }
 
