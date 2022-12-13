@@ -422,6 +422,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             index++
         }
     }
+    if(reader.last().isNotEmpty() && !reader.last().matches(Regex("""[ \t]*"""))) writer.write("</p")
     writer.write("</body></html>")
     writer.close()
 }
