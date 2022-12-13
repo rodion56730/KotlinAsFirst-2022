@@ -348,7 +348,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var flagi = true
     var flagb = true
     var flags = true
-    var flagstr = true
+    var flagstr = false
     writer.write("<html><body><p>")
     for (line in reader) {
         if ((line.isEmpty() || line.matches(Regex(""" +"""))) && flagstr) {
