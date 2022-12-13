@@ -357,7 +357,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
             continue
         }
         else{
-            if(line.isNotEmpty() && !flagstr){
+            if(!line.matches(Regex("""[ \t]*""")) && !flagstr){
                 writer.write("<p>")
                 flagstr = true
             }
